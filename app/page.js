@@ -19,6 +19,9 @@ export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleSections, setVisibleSections] = useState(new Set());
   const [activeTimelineItem, setActiveTimelineItem] = useState(null);
+  const [selectedYear, setSelectedYear] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,36 +104,164 @@ export default function Home() {
     }
   ];
 
-  const timeline = [
-    { 
-      year: 2020, 
-      event: 'プロジェクト始動',
-      detail: '瀬戸焼の伝統を現代につなげる想いから、有志メンバーが集まりプロジェクトを立ち上げました。',
-      stats: '創設メンバー: 5名',
-      image: '🌱'
+  const archiveEvents = [
+    // 2024年のイベント
+    {
+      id: 1,
+      year: 2024,
+      month: '12月',
+      category: 'トークイベント',
+      title: '土トーーク！vol.15',
+      description: '瀬戸焼の未来について職人・作家・市民で語り合う年末スペシャル',
+      date: '2024.12.15',
+      participants: 45,
+      mediaType: 'video',
+      thumbnail: 'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=400',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      tags: ['職人対話', '未来展望']
     },
-    { 
-      year: 2021, 
-      event: '最初のトークイベント開催',
-      detail: '「土トーーク！vol.1」を開催。地域の職人さんや市民約30名が参加し、熱い議論が交わされました。',
-      stats: '参加者: 30名',
-      image: '💬'
+    {
+      id: 2,
+      year: 2024,
+      month: '11月',
+      category: 'フィールドワーク',
+      title: '深川神社周辺の窯跡探索',
+      description: '江戸時代の古窯跡を巡り、瀬戸焼のルーツを探る歴史散策',
+      date: '2024.11.23',
+      participants: 25,
+      mediaType: 'photos',
+      thumbnail: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+      photos: [
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+        'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=800',
+        'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=800'
+      ],
+      tags: ['歴史探索', '古窯跡']
     },
-    { 
-      year: 2023, 
-      event: '洞地区フィールドワーク',
-      detail: '瀬戸の心臓部である洞地区の窯元を巡り、1300年の歴史を肌で感じるツアーを実施しました。',
-      stats: '訪問窯元: 8軒',
-      image: '🚶'
+    {
+      id: 3,
+      year: 2024,
+      month: '10月',
+      category: 'ワークショップ',
+      title: '親子でつくる瀬戸焼体験',
+      description: '家族で楽しむやきもの制作。親子の絆を深める特別企画',
+      date: '2024.10.14',
+      participants: 20,
+      mediaType: 'photos',
+      thumbnail: 'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=400',
+      photos: [
+        'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=800',
+        'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=800'
+      ],
+      tags: ['親子', '体験']
     },
-    { 
-      year: 2024, 
-      event: '国際芸術祭「あいち」参加',
-      detail: '国際的な舞台で瀬戸焼の魅力を発信。世界中から訪れる来場者に地域の文化を紹介しました。',
-      stats: '来場者: 500名+',
-      image: '🎨'
+    {
+      id: 4,
+      year: 2024,
+      month: '9月',
+      category: 'トークイベント',
+      title: '土トーーク！vol.14 - 国際芸術祭振り返り',
+      description: 'あいち国際芸術祭での体験を振り返り、今後の展望を語る',
+      date: '2024.09.21',
+      participants: 35,
+      mediaType: 'video',
+      thumbnail: 'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=400',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      tags: ['芸術祭', '振り返り']
+    },
+    {
+      id: 5,
+      year: 2024,
+      month: '8月',
+      category: 'フィールドワーク',
+      title: '夏の窯場見学ツアー',
+      description: '真夏の窯場で職人の技を間近で見学。暑さに負けない情熱を体感',
+      date: '2024.08.17',
+      participants: 18,
+      mediaType: 'photos',
+      thumbnail: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+      photos: [
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+        'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=800'
+      ],
+      tags: ['窯場', '職人技']
+    },
+    // 2023年のイベント
+    {
+      id: 6,
+      year: 2023,
+      month: '12月',
+      category: 'トークイベント',
+      title: '土トーーク！vol.12 - 年末スペシャル',
+      description: '2023年の活動を振り返り、来年への想いを語り合う',
+      date: '2023.12.16',
+      participants: 40,
+      mediaType: 'video',
+      thumbnail: 'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=400',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      tags: ['年末', '振り返り']
+    },
+    {
+      id: 7,
+      year: 2023,
+      month: '10月',
+      category: 'フィールドワーク',
+      title: '洞地区の歴史を歩く',
+      description: '瀬戸焼発祥の地とされる洞地区を詳しく探索',
+      date: '2023.10.28',
+      participants: 30,
+      mediaType: 'photos',
+      thumbnail: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+      photos: [
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
+        'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=800',
+        'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=800'
+      ],
+      tags: ['洞地区', '歴史']
+    },
+    // 2022年のイベント
+    {
+      id: 8,
+      year: 2022,
+      month: '11月',
+      category: 'ワークショップ',
+      title: '秋のやきもの制作会',
+      description: '紅葉の季節に、落ち着いた雰囲気でやきもの作りを楽しむ',
+      date: '2022.11.19',
+      participants: 22,
+      mediaType: 'photos',
+      thumbnail: 'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=400',
+      photos: [
+        'https://images.unsplash.com/photo-1571205894034-3b0d1e4cc348?w=800',
+        'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=800'
+      ],
+      tags: ['秋', '制作会']
+    },
+    // 2021年のイベント
+    {
+      id: 9,
+      year: 2021,
+      month: '6月',
+      category: 'トークイベント',
+      title: '土トーーク！vol.1 - 記念すべき第一回',
+      description: 'プロジェクト初のトークイベント。多くの市民が参加し大成功',
+      date: '2021.06.12',
+      participants: 30,
+      mediaType: 'video',
+      thumbnail: 'https://images.unsplash.com/photo-1594736797933-d0ca9c1c2e66?w=400',
+      videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      tags: ['第一回', '記念']
     }
   ];
+
+  const filteredEvents = archiveEvents.filter(event => {
+    const yearMatch = selectedYear === 'all' || event.year.toString() === selectedYear;
+    const categoryMatch = selectedCategory === 'all' || event.category === selectedCategory;
+    return yearMatch && categoryMatch;
+  });
+
+  const years = ['all', ...Array.from(new Set(archiveEvents.map(e => e.year.toString()))).sort((a, b) => b - a)];
+  const categories = ['all', 'トークイベント', 'フィールドワーク', 'ワークショップ'];
 
   const members = [
     { name: '田中さん', role: '代表', message: '瀬戸の土と人をつなぎたい' },
@@ -411,195 +542,275 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Timeline Section */}
+      {/* Archive Section */}
       <section style={{
         padding: '5rem 2rem',
-        background: colors.surfaceWarm
+        background: colors.surfaceWarm,
+        minHeight: '100vh'
       }}>
-        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.5rem)',
             textAlign: 'center',
-            marginBottom: '4rem',
+            marginBottom: '2rem',
             color: colors.primaryDark
-          }} id="timeline" data-animate>
-            プロジェクトストーリー
+          }} id="archive" data-animate>
+            活動アーカイブ
           </h2>
           
-          <div style={{
-            position: 'relative',
-            animation: visibleSections.has('timeline') ? 'fadeInUp 1s ease' : 'none'
+          <p style={{
+            textAlign: 'center',
+            color: colors.textSecondary,
+            marginBottom: '3rem',
+            fontSize: '1.1rem'
           }}>
-            {/* 中央の縦線 */}
-            <div style={{
-              position: 'absolute',
-              left: '50%',
-              top: '0',
-              bottom: '0',
-              width: '4px',
-              background: `linear-gradient(to bottom, ${colors.accentFlame}, ${colors.accentEarth})`,
-              transform: 'translateX(-50%)',
-              borderRadius: '2px'
-            }} />
+            これまでに開催した{archiveEvents.length}回のイベント・フィールドワークの記録
+          </p>
 
-            {timeline.map((item, index) => {
-              const isLeft = index % 2 === 0;
-              const isActive = activeTimelineItem === index;
-              
-              return (
-                <div key={index} style={{
+          {/* フィルター */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '1rem',
+            marginBottom: '3rem',
+            flexWrap: 'wrap'
+          }}>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <span style={{ color: colors.textSecondary, fontSize: '0.9rem' }}>年:</span>
+              {years.map(year => (
+                <button
+                  key={year}
+                  onClick={() => setSelectedYear(year)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    border: 'none',
+                    borderRadius: '20px',
+                    background: selectedYear === year ? colors.accentFlame : 'white',
+                    color: selectedYear === year ? 'white' : colors.textSecondary,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    fontSize: '0.85rem',
+                    fontWeight: selectedYear === year ? 'bold' : 'normal'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedYear !== year) {
+                      e.target.style.background = colors.primaryLight;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedYear !== year) {
+                      e.target.style.background = 'white';
+                    }
+                  }}
+                >
+                  {year === 'all' ? '全て' : year}
+                </button>
+              ))}
+            </div>
+            
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+              <span style={{ color: colors.textSecondary, fontSize: '0.9rem' }}>カテゴリ:</span>
+              {categories.map(category => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    border: 'none',
+                    borderRadius: '20px',
+                    background: selectedCategory === category ? colors.accentEarth : 'white',
+                    color: selectedCategory === category ? 'white' : colors.textSecondary,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    fontSize: '0.85rem',
+                    fontWeight: selectedCategory === category ? 'bold' : 'normal'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (selectedCategory !== category) {
+                      e.target.style.background = colors.primaryLight;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCategory !== category) {
+                      e.target.style.background = 'white';
+                    }
+                  }}
+                >
+                  {category === 'all' ? '全て' : category}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* イベントカードグリッド */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))',
+            gap: '2rem',
+            animation: visibleSections.has('archive') ? 'fadeInUp 0.8s ease' : 'none'
+          }}>
+            {filteredEvents.map((event, index) => (
+              <div
+                key={event.id}
+                onClick={() => setSelectedEvent(event)}
+                style={{
+                  background: 'white',
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  boxShadow: `0 8px 25px ${colors.shadowSoft}`,
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
                   position: 'relative',
-                  marginBottom: '4rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: isLeft ? 'flex-end' : 'flex-start'
+                  animationDelay: `${index * 0.1}s`
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-10px)';
+                  e.currentTarget.style.boxShadow = `0 20px 40px rgba(44, 36, 22, 0.15)`;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = `0 8px 25px ${colors.shadowSoft}`;
+                }}
+              >
+                {/* 画像/サムネイル部分 */}
+                <div style={{
+                  height: '200px',
+                  backgroundImage: `url(${event.thumbnail})`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  position: 'relative'
                 }}>
-                  {/* 年号の円 */}
+                  {/* グラデーションオーバーレイ */}
                   <div style={{
                     position: 'absolute',
-                    left: '50%',
-                    top: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '80px',
-                    height: '80px',
-                    background: colors.accentFlame,
+                    inset: 0,
+                    background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.7))'
+                  }} />
+                  
+                  {/* カテゴリタグ */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    left: '1rem',
+                    background: event.category === 'トークイベント' ? colors.accentFlame :
+                               event.category === 'フィールドワーク' ? colors.accentGlaze : colors.accentEarth,
+                    color: 'white',
+                    padding: '0.3rem 0.8rem',
+                    borderRadius: '15px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold'
+                  }}>
+                    {event.category}
+                  </div>
+                  
+                  {/* メディアタイプアイコン */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '1rem',
+                    right: '1rem',
+                    background: 'rgba(255, 255, 255, 0.9)',
                     borderRadius: '50%',
+                    width: '40px',
+                    height: '40px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'white',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold',
-                    boxShadow: `0 4px 20px ${colors.shadowSoft}`,
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease',
-                    border: `4px solid ${colors.surfaceWarm}`,
-                    zIndex: 2
-                  }}
-                  onClick={() => setActiveTimelineItem(activeTimelineItem === index ? null : index)}
-                  onMouseEnter={(e) => {
-                    e.target.style.transform = 'translate(-50%, -50%) scale(1.1)';
-                    e.target.style.background = colors.primaryDark;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.transform = 'translate(-50%, -50%) scale(1)';
-                    e.target.style.background = colors.accentFlame;
+                    fontSize: '1.2rem'
                   }}>
-                    {item.year}
+                    {event.mediaType === 'video' ? '🎥' : '📷'}
                   </div>
-
-                  {/* 基本カード */}
+                  
+                  {/* 日付 */}
                   <div style={{
-                    width: '45%',
-                    background: 'white',
-                    borderRadius: '15px',
-                    padding: '2rem',
-                    boxShadow: `0 5px 20px ${colors.shadowSoft}`,
-                    marginRight: isLeft ? '2rem' : '0',
-                    marginLeft: isLeft ? '0' : '2rem',
-                    transition: 'all 0.3s ease',
-                    cursor: 'pointer',
-                    position: 'relative'
-                  }}
-                  onClick={() => setActiveTimelineItem(activeTimelineItem === index ? null : index)}>
-                    {/* 三角形の矢印 */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '50%',
-                      [isLeft ? 'right' : 'left']: '-10px',
-                      transform: 'translateY(-50%)',
-                      width: 0,
-                      height: 0,
-                      borderTop: '10px solid transparent',
-                      borderBottom: '10px solid transparent',
-                      [isLeft ? 'borderRight' : 'borderLeft']: '10px solid white'
-                    }} />
-                    
-                    <div style={{
-                      fontSize: '2.5rem',
-                      marginBottom: '1rem',
-                      textAlign: 'center'
-                    }}>
-                      {item.image}
-                    </div>
-                    
-                    <h3 style={{
-                      fontSize: '1.2rem',
-                      marginBottom: '0.5rem',
-                      color: colors.primaryDark,
-                      textAlign: 'center'
-                    }}>
-                      {item.event}
-                    </h3>
-                    
-                    <p style={{
-                      color: colors.accentFlame,
-                      fontSize: '0.9rem',
-                      fontWeight: 'bold',
-                      textAlign: 'center'
-                    }}>
-                      {item.stats}
-                    </p>
+                    position: 'absolute',
+                    bottom: '1rem',
+                    left: '1rem',
+                    color: 'white',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
+                  }}>
+                    {event.date}
                   </div>
-
-                  {/* 詳細カード（展開式） */}
-                  {isActive && (
-                    <div style={{
-                      position: 'absolute',
-                      [isLeft ? 'right' : 'left']: '55%',
-                      top: '0',
-                      width: '350px',
-                      background: colors.accentFlame,
-                      color: 'white',
-                      borderRadius: '15px',
-                      padding: '2rem',
-                      boxShadow: `0 10px 30px rgba(255, 107, 53, 0.3)`,
-                      animation: 'expandCard 0.3s ease-out forwards',
-                      zIndex: 3
-                    }}>
-                      <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        [isLeft ? 'left' : 'right']: '-10px',
-                        transform: 'translateY(-50%)',
-                        width: 0,
-                        height: 0,
-                        borderTop: '10px solid transparent',
-                        borderBottom: '10px solid transparent',
-                        [isLeft ? 'borderRight' : 'borderLeft']: `10px solid ${colors.accentFlame}`
-                      }} />
-                      
-                      <h4 style={{
-                        fontSize: '1.3rem',
-                        marginBottom: '1rem',
-                        fontWeight: 'bold'
-                      }}>
-                        {item.year}年の出来事
-                      </h4>
-                      
-                      <p style={{
-                        lineHeight: '1.6',
-                        marginBottom: '1rem',
-                        opacity: 0.95
-                      }}>
-                        {item.detail}
-                      </p>
-                      
-                      <div style={{
-                        background: 'rgba(255, 255, 255, 0.2)',
-                        padding: '0.8rem',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        fontWeight: 'bold'
-                      }}>
-                        📊 {item.stats}
-                      </div>
-                    </div>
-                  )}
                 </div>
-              );
-            })}
+                
+                {/* コンテンツ部分 */}
+                <div style={{ padding: '1.5rem' }}>
+                  <h3 style={{
+                    fontSize: '1.2rem',
+                    marginBottom: '0.8rem',
+                    color: colors.primaryDark,
+                    lineHeight: '1.3'
+                  }}>
+                    {event.title}
+                  </h3>
+                  
+                  <p style={{
+                    color: colors.textSecondary,
+                    fontSize: '0.9rem',
+                    lineHeight: '1.5',
+                    marginBottom: '1rem'
+                  }}>
+                    {event.description}
+                  </p>
+                  
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '1rem'
+                  }}>
+                    <span style={{
+                      color: colors.textSecondary,
+                      fontSize: '0.85rem'
+                    }}>
+                      👥 {event.participants}名参加
+                    </span>
+                    <span style={{
+                      color: colors.accentFlame,
+                      fontSize: '0.85rem',
+                      fontWeight: 'bold'
+                    }}>
+                      {event.month}
+                    </span>
+                  </div>
+                  
+                  {/* タグ */}
+                  <div style={{
+                    display: 'flex',
+                    gap: '0.5rem',
+                    flexWrap: 'wrap'
+                  }}>
+                    {event.tags.map((tag, tagIndex) => (
+                      <span
+                        key={tagIndex}
+                        style={{
+                          background: colors.primaryLight,
+                          color: colors.textSecondary,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '10px',
+                          fontSize: '0.75rem',
+                          border: `1px solid ${colors.shadowSoft}`
+                        }}
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
+
+          {filteredEvents.length === 0 && (
+            <div style={{
+              textAlign: 'center',
+              padding: '3rem',
+              color: colors.textSecondary
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
+              <p>該当するイベントが見つかりませんでした</p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -797,6 +1008,219 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Event Detail Modal */}
+      {selectedEvent && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          zIndex: 9999,
+          background: 'rgba(0, 0, 0, 0.8)',
+          backdropFilter: 'blur(5px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '2rem',
+          animation: 'fadeIn 0.3s ease'
+        }}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) {
+            setSelectedEvent(null);
+          }
+        }}>
+          <div style={{
+            background: 'white',
+            borderRadius: '20px',
+            maxWidth: '800px',
+            maxHeight: '90vh',
+            overflowY: 'auto',
+            position: 'relative',
+            animation: 'slideInFromBottom 0.3s ease'
+          }}
+          onClick={(e) => e.stopPropagation()}>
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedEvent(null)}
+              style={{
+                position: 'absolute',
+                top: '1.5rem',
+                right: '1.5rem',
+                background: 'rgba(255, 255, 255, 0.9)',
+                border: 'none',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                cursor: 'pointer',
+                fontSize: '1.2rem',
+                zIndex: 10,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: `0 2px 10px ${colors.shadowSoft}`
+              }}
+            >
+              ×
+            </button>
+
+            {/* Hero Image */}
+            <div style={{
+              height: '300px',
+              backgroundImage: `url(${selectedEvent.thumbnail})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              position: 'relative',
+              borderTopLeftRadius: '20px',
+              borderTopRightRadius: '20px'
+            }}>
+              <div style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.5))'
+              }} />
+              
+              <div style={{
+                position: 'absolute',
+                bottom: '2rem',
+                left: '2rem',
+                color: 'white'
+              }}>
+                <div style={{
+                  background: selectedEvent.category === 'トークイベント' ? colors.accentFlame :
+                             selectedEvent.category === 'フィールドワーク' ? colors.accentGlaze : colors.accentEarth,
+                  padding: '0.5rem 1rem',
+                  borderRadius: '20px',
+                  fontSize: '0.9rem',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  display: 'inline-block'
+                }}>
+                  {selectedEvent.category}
+                </div>
+                <h2 style={{
+                  fontSize: '2rem',
+                  marginBottom: '0.5rem',
+                  textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+                }}>
+                  {selectedEvent.title}
+                </h2>
+                <p style={{
+                  fontSize: '1.1rem',
+                  opacity: 0.9,
+                  textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
+                }}>
+                  {selectedEvent.date} | {selectedEvent.participants}名参加
+                </p>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div style={{ padding: '2rem' }}>
+              <p style={{
+                fontSize: '1.1rem',
+                lineHeight: '1.6',
+                color: colors.textSecondary,
+                marginBottom: '2rem'
+              }}>
+                {selectedEvent.description}
+              </p>
+
+              {/* Media Content */}
+              {selectedEvent.mediaType === 'video' && selectedEvent.videoUrl && (
+                <div style={{ marginBottom: '2rem' }}>
+                  <h3 style={{
+                    fontSize: '1.3rem',
+                    marginBottom: '1rem',
+                    color: colors.primaryDark
+                  }}>
+                    📹 イベント動画
+                  </h3>
+                  <div style={{
+                    position: 'relative',
+                    paddingBottom: '56.25%',
+                    height: 0,
+                    borderRadius: '15px',
+                    overflow: 'hidden'
+                  }}>
+                    <iframe
+                      src={selectedEvent.videoUrl}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 'none'
+                      }}
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              )}
+
+              {selectedEvent.photos && (
+                <div style={{ marginBottom: '2rem' }}>
+                  <h3 style={{
+                    fontSize: '1.3rem',
+                    marginBottom: '1rem',
+                    color: colors.primaryDark
+                  }}>
+                    📸 イベント写真
+                  </h3>
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '1rem'
+                  }}>
+                    {selectedEvent.photos.map((photo, index) => (
+                      <div key={index} style={{
+                        borderRadius: '10px',
+                        overflow: 'hidden',
+                        aspectRatio: '16/9',
+                        backgroundImage: `url(${photo})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        cursor: 'pointer',
+                        transition: 'transform 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                      onMouseLeave={(e) => e.target.style.transform = 'scale(1)'} />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Tags */}
+              <div style={{ marginBottom: '2rem' }}>
+                <h3 style={{
+                  fontSize: '1.1rem',
+                  marginBottom: '1rem',
+                  color: colors.primaryDark
+                }}>
+                  🏷️ タグ
+                </h3>
+                <div style={{
+                  display: 'flex',
+                  gap: '0.5rem',
+                  flexWrap: 'wrap'
+                }}>
+                  {selectedEvent.tags.map((tag, index) => (
+                    <span key={index} style={{
+                      background: colors.surfaceWarm,
+                      color: colors.primaryDark,
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.9rem',
+                      fontWeight: 'bold'
+                    }}>
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer style={{
         background: colors.primaryDark,
@@ -889,6 +1313,26 @@ export default function Home() {
           to {
             opacity: 1;
             transform: scale(1);
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        
+        @keyframes slideInFromBottom {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
           }
         }
         
