@@ -377,160 +377,50 @@ export default function Home() {
       {/* Hero Section */}
       <section style={{
         minHeight: '100vh',
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        background: `linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.surfaceWarm} 100%)`,
         padding: '2rem',
-        overflow: 'hidden'
+        display: 'flex',
+        alignItems: 'center'
       }}>
-        {/* Background Layer */}
         <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: `
-            radial-gradient(circle at 20% 80%, ${colors.surfaceWarm}40 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, ${colors.accentEarth}20 0%, transparent 50%),
-            radial-gradient(circle at 40% 40%, ${colors.accentGlaze}15 0%, transparent 50%),
-            linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.surfaceWarm} 100%)
-          `
-        }} />
-
-        {/* Floating Pottery Elements */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          pointerEvents: 'none'
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: '4rem',
+          alignItems: 'center',
+          width: '100%'
         }}>
-          {[
-            { emoji: '🏺', x: '10%', y: '20%', delay: '0s', duration: '20s' },
-            { emoji: '🍵', x: '85%', y: '15%', delay: '2s', duration: '25s' },
-            { emoji: '🌿', x: '15%', y: '70%', delay: '1s', duration: '18s' },
-            { emoji: '✨', x: '80%', y: '75%', delay: '3s', duration: '22s' },
-            { emoji: '🔥', x: '5%', y: '45%', delay: '1.5s', duration: '30s' },
-            { emoji: '🍃', x: '90%', y: '50%', delay: '2.5s', duration: '28s' }
-          ].map((item, index) => (
-            <div key={index} style={{
-              position: 'absolute',
-              left: item.x,
-              top: item.y,
-              fontSize: '2rem',
-              opacity: '0.3',
-              animation: `float ${item.duration} infinite linear`,
-              animationDelay: item.delay
-            }}>
-              {item.emoji}
-            </div>
-          ))}
-        </div>
-
-        {/* Particle Effect */}
-        <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: `
-            radial-gradient(2px 2px at 20px 30px, ${colors.accentEarth}40, transparent),
-            radial-gradient(2px 2px at 40px 70px, ${colors.accentFlame}30, transparent),
-            radial-gradient(1px 1px at 90px 40px, ${colors.accentGlaze}40, transparent),
-            radial-gradient(1px 1px at 130px 80px, ${colors.textSecondary}30, transparent)
-          `,
-          backgroundSize: '150px 150px',
-          animation: 'particleMove 60s linear infinite'
-        }} />
-
-        <div style={{
-          maxWidth: '900px',
-          textAlign: 'center',
-          position: 'relative',
-          zIndex: 2
-        }} id="hero" data-animate>
+          {/* Left Column - Message */}
           <div style={{
             animation: visibleSections.has('hero') ? 'fadeInUp 1s ease' : 'none'
-          }}>
+          }} id="hero" data-animate>
             <h1 style={{
-              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontSize: 'clamp(2.5rem, 5vw, 3.5rem)',
               fontWeight: 'bold',
-              marginBottom: '1rem',
+              marginBottom: '1.5rem',
               color: colors.primaryDark,
-              lineHeight: '1.2',
-              textShadow: `2px 2px 4px ${colors.shadowSoft}`
+              lineHeight: '1.2'
             }}>
-              瀬戸の土が、人をつなぐ
+              瀬戸の土が、<br />人をつなぐ
             </h1>
-            
-            {/* Year Counter */}
-            <div style={{
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              color: colors.accentFlame,
-              marginBottom: '2rem',
-              fontWeight: 'bold',
-              animation: 'pulse 2s infinite'
-            }}>
-              {currentYear}年の歴史を持つ瀬戸焼の街で
-            </div>
             
             <p style={{
               fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
               color: colors.textSecondary,
-              marginBottom: '3rem',
-              maxWidth: '600px',
-              margin: '0 auto 3rem',
+              marginBottom: '2rem',
               lineHeight: '1.6'
             }}>
+              1300年の歴史を持つ瀬戸焼の街で、<br />
               新しいコミュニティを育てています
             </p>
 
             <div style={{
-              background: 'rgba(255, 255, 255, 0.95)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '25px',
-              padding: '2.5rem',
-              boxShadow: `0 15px 35px ${colors.shadowSoft}, 0 5px 15px rgba(255, 107, 53, 0.2)`,
-              maxWidth: '520px',
-              margin: '0 auto 3rem',
-              border: `2px solid ${colors.accentFlame}`,
-              position: 'relative',
-              animation: 'glow 3s ease-in-out infinite alternate'
+              display: 'flex',
+              gap: '1rem',
+              marginBottom: '2rem',
+              flexWrap: 'wrap'
             }}>
-              {/* Corner decorations */}
-              <div style={{
-                position: 'absolute',
-                top: '-8px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                width: '40px',
-                height: '4px',
-                background: colors.accentFlame,
-                borderRadius: '2px'
-              }} />
-              
-              <div style={{
-                color: colors.accentFlame,
-                fontSize: '1rem',
-                fontWeight: 'bold',
-                marginBottom: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem'
-              }}>
-                🔥 次回イベント
-              </div>
-              <h3 style={{
-                fontSize: '1.5rem',
-                marginBottom: '0.8rem',
-                color: colors.primaryDark,
-                fontWeight: 'bold'
-              }}>
-                土トーーク！vol.5
-              </h3>
-              <p style={{
-                color: colors.textSecondary,
-                fontSize: '1rem',
-                marginBottom: '1.5rem'
-              }}>
-                12月15日(日) 14:00〜 | 瀬戸蔵
-              </p>
               <button style={{
                 background: `linear-gradient(135deg, ${colors.accentFlame}, ${colors.accentEarth})`,
                 color: 'white',
@@ -544,34 +434,286 @@ export default function Home() {
                 boxShadow: `0 4px 15px rgba(255, 107, 53, 0.3)`
               }}
               onMouseEnter={(e) => {
-                e.target.style.transform = 'translateY(-3px)';
+                e.target.style.transform = 'translateY(-2px)';
                 e.target.style.boxShadow = `0 8px 25px rgba(255, 107, 53, 0.4)`;
               }}
               onMouseLeave={(e) => {
                 e.target.style.transform = 'translateY(0)';
                 e.target.style.boxShadow = `0 4px 15px rgba(255, 107, 53, 0.3)`;
               }}>
-                詳細・参加申込
+                📅 イベントに参加する
+              </button>
+
+              <button style={{
+                background: 'white',
+                color: colors.primaryDark,
+                border: `2px solid ${colors.accentGlaze}`,
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: `0 4px 15px ${colors.shadowSoft}`
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.background = colors.accentGlaze;
+                e.target.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.background = 'white';
+                e.target.style.color = colors.primaryDark;
+              }}>
+                📖 活動について知る
               </button>
             </div>
 
-            {/* Scroll Indicator */}
+            {/* Stats */}
             <div style={{
-              position: 'absolute',
-              bottom: '2rem',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              color: colors.textSecondary,
-              textAlign: 'center',
-              animation: 'bounce 2s infinite'
+              display: 'flex',
+              gap: '2rem',
+              flexWrap: 'wrap'
             }}>
-              <div style={{ marginBottom: '0.5rem', fontSize: '0.9rem' }}>
-                スクロールして詳細を見る
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'bold',
+                  color: colors.accentFlame,
+                  marginBottom: '0.5rem'
+                }}>
+                  15+
+                </div>
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: colors.textSecondary
+                }}>
+                  開催イベント数
+                </div>
               </div>
-              <div style={{ fontSize: '1.5rem' }}>↓</div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'bold',
+                  color: colors.accentEarth,
+                  marginBottom: '0.5rem'
+                }}>
+                  300+
+                </div>
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: colors.textSecondary
+                }}>
+                  参加者数
+                </div>
+              </div>
+              <div style={{ textAlign: 'center' }}>
+                <div style={{
+                  fontSize: '2rem',
+                  fontWeight: 'bold',
+                  color: colors.accentGlaze,
+                  marginBottom: '0.5rem'
+                }}>
+                  10+
+                </div>
+                <div style={{
+                  fontSize: '0.9rem',
+                  color: colors.textSecondary
+                }}>
+                  協力窯元
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Event Cards */}
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '1rem'
+          }}>
+            {/* Next Event Highlight */}
+            <div style={{
+              background: 'white',
+              borderRadius: '20px',
+              padding: '2rem',
+              boxShadow: `0 10px 30px ${colors.shadowSoft}`,
+              border: `3px solid ${colors.accentFlame}`,
+              position: 'relative'
+            }}>
+              <div style={{
+                position: 'absolute',
+                top: '-12px',
+                left: '2rem',
+                background: colors.accentFlame,
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '15px',
+                fontSize: '0.8rem',
+                fontWeight: 'bold'
+              }}>
+                🔥 NEXT EVENT
+              </div>
+              
+              <h3 style={{
+                fontSize: '1.3rem',
+                marginBottom: '0.8rem',
+                color: colors.primaryDark,
+                marginTop: '0.5rem'
+              }}>
+                土トーーク！vol.5
+              </h3>
+              <p style={{
+                color: colors.textSecondary,
+                fontSize: '0.9rem',
+                marginBottom: '1rem'
+              }}>
+                瀬戸焼の未来について語り合う年末スペシャル
+              </p>
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}>
+                <span style={{
+                  color: colors.accentFlame,
+                  fontSize: '0.9rem',
+                  fontWeight: 'bold'
+                }}>
+                  12月15日(日) 14:00
+                </span>
+                <button style={{
+                  background: colors.accentFlame,
+                  color: 'white',
+                  border: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '15px',
+                  fontSize: '0.8rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.background = colors.primaryDark}
+                onMouseLeave={(e) => e.target.style.background = colors.accentFlame}>
+                  申込む
+                </button>
+              </div>
+            </div>
+
+            {/* Upcoming Events */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr',
+              gap: '1rem'
+            }}>
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '1.5rem',
+                boxShadow: `0 5px 20px ${colors.shadowSoft}`,
+                border: `2px solid ${colors.accentGlaze}`
+              }}>
+                <div style={{
+                  background: colors.accentGlaze,
+                  color: 'white',
+                  padding: '0.3rem 0.8rem',
+                  borderRadius: '10px',
+                  fontSize: '0.7rem',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  display: 'inline-block'
+                }}>
+                  フィールドワーク
+                </div>
+                <h4 style={{
+                  fontSize: '1rem',
+                  marginBottom: '0.5rem',
+                  color: colors.primaryDark
+                }}>
+                  窯元めぐり
+                </h4>
+                <p style={{
+                  color: colors.textSecondary,
+                  fontSize: '0.8rem'
+                }}>
+                  12/22(日)
+                </p>
+              </div>
+
+              <div style={{
+                background: 'white',
+                borderRadius: '15px',
+                padding: '1.5rem',
+                boxShadow: `0 5px 20px ${colors.shadowSoft}`,
+                border: `2px solid ${colors.accentEarth}`
+              }}>
+                <div style={{
+                  background: colors.accentEarth,
+                  color: 'white',
+                  padding: '0.3rem 0.8rem',
+                  borderRadius: '10px',
+                  fontSize: '0.7rem',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  display: 'inline-block'
+                }}>
+                  ワークショップ
+                </div>
+                <h4 style={{
+                  fontSize: '1rem',
+                  marginBottom: '0.5rem',
+                  color: colors.primaryDark
+                }}>
+                  やきもの制作
+                </h4>
+                <p style={{
+                  color: colors.textSecondary,
+                  fontSize: '0.8rem'
+                }}>
+                  1/13(土)
+                </p>
+              </div>
+            </div>
+
+            {/* View All Events Link */}
+            <div style={{
+              textAlign: 'center',
+              marginTop: '1rem'
+            }}>
+              <button style={{
+                background: 'transparent',
+                border: `2px solid ${colors.textSecondary}`,
+                color: colors.textSecondary,
+                padding: '0.8rem 1.5rem',
+                borderRadius: '20px',
+                fontSize: '0.9rem',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                width: '100%'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = colors.textSecondary;
+                e.target.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = 'transparent';
+                e.target.style.color = colors.textSecondary;
+              }}>
+                📋 全てのイベントを見る
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Layout Adjustment */}
+        <style jsx>{`
+          @media (max-width: 768px) {
+            section > div {
+              grid-template-columns: 1fr !important;
+              gap: 2rem !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* Events Section */}
