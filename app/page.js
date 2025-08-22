@@ -18,6 +18,7 @@ const fontFamily = '"游ゴシック Medium", "Yu Gothic Medium", "Hiragino Kaku
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleSections, setVisibleSections] = useState(new Set());
+  const [activeTimelineItem, setActiveTimelineItem] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,10 +102,34 @@ export default function Home() {
   ];
 
   const timeline = [
-    { year: 2020, event: 'プロジェクト始動' },
-    { year: 2021, event: '最初のトークイベント開催' },
-    { year: 2023, event: '洞地区フィールドワーク' },
-    { year: 2024, event: '国際芸術祭「あいち」参加' }
+    { 
+      year: 2020, 
+      event: 'プロジェクト始動',
+      detail: '瀬戸焼の伝統を現代につなげる想いから、有志メンバーが集まりプロジェクトを立ち上げました。',
+      stats: '創設メンバー: 5名',
+      image: '🌱'
+    },
+    { 
+      year: 2021, 
+      event: '最初のトークイベント開催',
+      detail: '「土トーーク！vol.1」を開催。地域の職人さんや市民約30名が参加し、熱い議論が交わされました。',
+      stats: '参加者: 30名',
+      image: '💬'
+    },
+    { 
+      year: 2023, 
+      event: '洞地区フィールドワーク',
+      detail: '瀬戸の心臓部である洞地区の窯元を巡り、1300年の歴史を肌で感じるツアーを実施しました。',
+      stats: '訪問窯元: 8軒',
+      image: '🚶'
+    },
+    { 
+      year: 2024, 
+      event: '国際芸術祭「あいち」参加',
+      detail: '国際的な舞台で瀬戸焼の魅力を発信。世界中から訪れる来場者に地域の文化を紹介しました。',
+      stats: '来場者: 500名+',
+      image: '🎨'
+    }
   ];
 
   const members = [
@@ -391,57 +416,189 @@ export default function Home() {
         padding: '5rem 2rem',
         background: colors.surfaceWarm
       }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 2.5rem)',
             textAlign: 'center',
-            marginBottom: '3rem',
+            marginBottom: '4rem',
             color: colors.primaryDark
           }} id="timeline" data-animate>
             プロジェクトストーリー
           </h2>
           
           <div style={{
-            display: 'flex',
-            overflowX: 'auto',
-            gap: '2rem',
-            padding: '2rem 0',
-            animation: visibleSections.has('timeline') ? 'slideInFromLeft 1s ease' : 'none'
+            position: 'relative',
+            animation: visibleSections.has('timeline') ? 'fadeInUp 1s ease' : 'none'
           }}>
-            {timeline.map((item, index) => (
-              <div key={index} style={{
-                minWidth: '250px',
-                background: 'white',
-                borderRadius: '15px',
-                padding: '2rem',
-                textAlign: 'center',
-                boxShadow: `0 5px 20px ${colors.shadowSoft}`,
-                position: 'relative'
-              }}>
-                <div style={{
-                  width: '60px',
-                  height: '60px',
-                  background: colors.accentFlame,
-                  borderRadius: '50%',
+            {/* 中央の縦線 */}
+            <div style={{
+              position: 'absolute',
+              left: '50%',
+              top: '0',
+              bottom: '0',
+              width: '4px',
+              background: `linear-gradient(to bottom, ${colors.accentFlame}, ${colors.accentEarth})`,
+              transform: 'translateX(-50%)',
+              borderRadius: '2px'
+            }} />
+
+            {timeline.map((item, index) => {
+              const isLeft = index % 2 === 0;
+              const isActive = activeTimelineItem === index;
+              
+              return (
+                <div key={index} style={{
+                  position: 'relative',
+                  marginBottom: '4rem',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 1rem',
-                  color: 'white',
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold'
+                  justifyContent: isLeft ? 'flex-end' : 'flex-start'
                 }}>
-                  {item.year}
+                  {/* 年号の円 */}
+                  <div style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '80px',
+                    height: '80px',
+                    background: colors.accentFlame,
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontSize: '1.2rem',
+                    fontWeight: 'bold',
+                    boxShadow: `0 4px 20px ${colors.shadowSoft}`,
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    border: `4px solid ${colors.surfaceWarm}`,
+                    zIndex: 2
+                  }}
+                  onClick={() => setActiveTimelineItem(activeTimelineItem === index ? null : index)}
+                  onMouseEnter={(e) => {
+                    e.target.style.transform = 'translate(-50%, -50%) scale(1.1)';
+                    e.target.style.background = colors.primaryDark;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.transform = 'translate(-50%, -50%) scale(1)';
+                    e.target.style.background = colors.accentFlame;
+                  }}>
+                    {item.year}
+                  </div>
+
+                  {/* 基本カード */}
+                  <div style={{
+                    width: '45%',
+                    background: 'white',
+                    borderRadius: '15px',
+                    padding: '2rem',
+                    boxShadow: `0 5px 20px ${colors.shadowSoft}`,
+                    marginRight: isLeft ? '2rem' : '0',
+                    marginLeft: isLeft ? '0' : '2rem',
+                    transition: 'all 0.3s ease',
+                    cursor: 'pointer',
+                    position: 'relative'
+                  }}
+                  onClick={() => setActiveTimelineItem(activeTimelineItem === index ? null : index)}>
+                    {/* 三角形の矢印 */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '50%',
+                      [isLeft ? 'right' : 'left']: '-10px',
+                      transform: 'translateY(-50%)',
+                      width: 0,
+                      height: 0,
+                      borderTop: '10px solid transparent',
+                      borderBottom: '10px solid transparent',
+                      [isLeft ? 'borderRight' : 'borderLeft']: '10px solid white'
+                    }} />
+                    
+                    <div style={{
+                      fontSize: '2.5rem',
+                      marginBottom: '1rem',
+                      textAlign: 'center'
+                    }}>
+                      {item.image}
+                    </div>
+                    
+                    <h3 style={{
+                      fontSize: '1.2rem',
+                      marginBottom: '0.5rem',
+                      color: colors.primaryDark,
+                      textAlign: 'center'
+                    }}>
+                      {item.event}
+                    </h3>
+                    
+                    <p style={{
+                      color: colors.accentFlame,
+                      fontSize: '0.9rem',
+                      fontWeight: 'bold',
+                      textAlign: 'center'
+                    }}>
+                      {item.stats}
+                    </p>
+                  </div>
+
+                  {/* 詳細カード（展開式） */}
+                  {isActive && (
+                    <div style={{
+                      position: 'absolute',
+                      [isLeft ? 'right' : 'left']: '55%',
+                      top: '0',
+                      width: '350px',
+                      background: colors.accentFlame,
+                      color: 'white',
+                      borderRadius: '15px',
+                      padding: '2rem',
+                      boxShadow: `0 10px 30px rgba(255, 107, 53, 0.3)`,
+                      animation: 'expandCard 0.3s ease-out forwards',
+                      zIndex: 3
+                    }}>
+                      <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        [isLeft ? 'left' : 'right']: '-10px',
+                        transform: 'translateY(-50%)',
+                        width: 0,
+                        height: 0,
+                        borderTop: '10px solid transparent',
+                        borderBottom: '10px solid transparent',
+                        [isLeft ? 'borderRight' : 'borderLeft']: `10px solid ${colors.accentFlame}`
+                      }} />
+                      
+                      <h4 style={{
+                        fontSize: '1.3rem',
+                        marginBottom: '1rem',
+                        fontWeight: 'bold'
+                      }}>
+                        {item.year}年の出来事
+                      </h4>
+                      
+                      <p style={{
+                        lineHeight: '1.6',
+                        marginBottom: '1rem',
+                        opacity: 0.95
+                      }}>
+                        {item.detail}
+                      </p>
+                      
+                      <div style={{
+                        background: 'rgba(255, 255, 255, 0.2)',
+                        padding: '0.8rem',
+                        borderRadius: '8px',
+                        fontSize: '0.9rem',
+                        fontWeight: 'bold'
+                      }}>
+                        📊 {item.stats}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <p style={{
-                  color: colors.primaryDark,
-                  fontSize: '1rem',
-                  fontWeight: 'bold'
-                }}>
-                  {item.event}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -721,6 +878,17 @@ export default function Home() {
           to {
             opacity: 1;
             transform: translateX(0);
+          }
+        }
+        
+        @keyframes expandCard {
+          from {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
           }
         }
         
