@@ -2,269 +2,154 @@ export default function Home() {
   return (
     <div style={{
       minHeight: '100vh',
-      backgroundColor: '#0a0a0a',
-      color: '#ffffff',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
-      {/* ナビゲーションバー */}
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        backgroundColor: 'rgba(0,0,0,0.9)',
-        backdropFilter: 'blur(10px)',
-        padding: '15px 30px',
-        zIndex: 1000,
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          maxWidth: '1400px',
-          margin: '0 auto'
-        }}>
-          <h1 style={{
-            fontSize: '24px',
-            fontWeight: 700,
-            margin: 0,
-            background: 'linear-gradient(135deg, #ff6b35 0%, #a0522d 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent'
-          }}>
-            🏺 TSUCHIMACHI BASE
-          </h1>
-          <button style={{
-            backgroundColor: '#ff6b35',
-            color: 'white',
-            border: 'none',
-            padding: '10px 24px',
-            borderRadius: '20px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}>
-            ログイン
-          </button>
-        </div>
-      </nav>
+      {/* 背景装飾 */}
+      <div style={{
+        position: 'absolute',
+        width: '500px',
+        height: '500px',
+        background: 'radial-gradient(circle, rgba(255,107,53,0.3) 0%, transparent 70%)',
+        borderRadius: '50%',
+        top: '-100px',
+        right: '-100px',
+        filter: 'blur(60px)'
+      }}></div>
 
-      {/* ヒーローセクション */}
-      <section style={{
-        position: 'relative',
-        height: '70vh',
-        background: 'linear-gradient(135deg, rgba(255,107,53,0.9) 0%, rgba(160,82,45,0.9) 100%), url("/hero-bg.jpg") center/cover',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: '60px'
+      {/* メインコンテンツ */}
+      <div style={{
+        paddingTop: '120px',
+        paddingBottom: '60px',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '120px 20px 60px'
       }}>
+        {/* ヒーローセクション */}
         <div style={{
           textAlign: 'center',
-          padding: '20px',
-          maxWidth: '800px'
+          marginBottom: '80px'
         }}>
-          <h2 style={{
-            fontSize: 'clamp(36px, 5vw, 64px)',
-            fontWeight: 800,
+          <h1 style={{
+            fontSize: '56px',
+            fontWeight: '800',
+            color: 'white',
             marginBottom: '20px',
-            textShadow: '0 4px 6px rgba(0,0,0,0.3)'
+            letterSpacing: '-1px'
           }}>
-            瀬戸の土が つなぐ物語
-          </h2>
+            土街人プロジェクト
+          </h1>
           <p style={{
-            fontSize: 'clamp(18px, 2vw, 24px)',
-            opacity: 0.95,
-            marginBottom: '40px'
+            fontSize: '20px',
+            color: 'rgba(255,255,255,0.9)',
+            maxWidth: '600px',
+            margin: '0 auto 40px'
           }}>
-            1300年の歴史を持つ瀬戸焼の街で、新しい価値を創造する
+            瀬戸の土と窯業文化を次世代へつなぐ、コミュニティプラットフォーム
           </p>
           <button style={{
-            backgroundColor: 'rgba(255,255,255,0.2)',
-            backdropFilter: 'blur(10px)',
-            color: 'white',
-            border: '2px solid white',
+            background: 'white',
+            color: '#667eea',
+            border: 'none',
             padding: '16px 40px',
-            fontSize: '18px',
             borderRadius: '30px',
+            fontSize: '16px',
+            fontWeight: '700',
             cursor: 'pointer',
-            fontWeight: 600,
-            transition: 'all 0.3s ease'
+            boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+            transition: 'transform 0.2s'
           }}>
-            活動に参加する →
+            はじめる →
           </button>
         </div>
-      </section>
 
-      {/* イベントセクション */}
-      <section style={{
-        padding: '80px 30px',
-        maxWidth: '1400px',
-        margin: '0 auto'
-      }}>
-        <h3 style={{
-          fontSize: '32px',
-          fontWeight: 700,
-          marginBottom: '40px'
-        }}>
-          今月のイベント
-        </h3>
-        
+        {/* カードグリッド */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
           gap: '24px'
         }}>
           {/* イベントカード */}
           <div style={{
-            backgroundColor: '#1a1a1a',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-            cursor: 'pointer',
-            border: '1px solid rgba(255,255,255,0.1)'
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '30px',
+            border: '1px solid rgba(255,255,255,0.2)',
+            transition: 'transform 0.3s'
           }}>
             <div style={{
-              height: '180px',
-              background: 'linear-gradient(135deg, #ff6b35 0%, #a0522d 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '48px'
+              fontSize: '40px',
+              marginBottom: '20px'
+            }}>🏺</div>
+            <h3 style={{
+              color: 'white',
+              fontSize: '24px',
+              marginBottom: '10px'
+            }}>今月のイベント</h3>
+            <p style={{
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '14px'
             }}>
-              🏺
-            </div>
-            <div style={{
-              padding: '24px'
-            }}>
-              <div style={{
-                fontSize: '14px',
-                color: '#ff6b35',
-                marginBottom: '8px',
-                fontWeight: 600
-              }}>
-                12月15日（日）14:00
-              </div>
-              <h4 style={{
-                fontSize: '20px',
-                fontWeight: 700,
-                marginBottom: '12px'
-              }}>
-                土トーーク！vol.5
-              </h4>
-              <p style={{
-                fontSize: '14px',
-                color: '#b0b0b0',
-                lineHeight: 1.6
-              }}>
-                瀬戸の土の魅力を語り尽くす、月例トークイベント。今回のゲストは...
-              </p>
-            </div>
+              土トーーク、フィールドワークなど
+            </p>
           </div>
 
-          {/* 追加のカード */}
+          {/* アーカイブカード */}
           <div style={{
-            backgroundColor: '#1a1a1a',
-            borderRadius: '12px',
-            overflow: 'hidden',
-            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-            cursor: 'pointer',
-            border: '1px solid rgba(255,255,255,0.1)'
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '30px',
+            border: '1px solid rgba(255,255,255,0.2)',
+            transition: 'transform 0.3s'
           }}>
             <div style={{
-              height: '180px',
-              background: 'linear-gradient(135deg, #a0522d 0%, #8b4513 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '48px'
+              fontSize: '40px',
+              marginBottom: '20px'
+            }}>📚</div>
+            <h3 style={{
+              color: 'white',
+              fontSize: '24px',
+              marginBottom: '10px'
+            }}>アーカイブ</h3>
+            <p style={{
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '14px'
             }}>
-              🔥
-            </div>
+              過去のイベント記録と写真
+            </p>
+          </div>
+
+          {/* メンバーカード */}
+          <div style={{
+            background: 'rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(20px)',
+            borderRadius: '20px',
+            padding: '30px',
+            border: '1px solid rgba(255,255,255,0.2)',
+            transition: 'transform 0.3s'
+          }}>
             <div style={{
-              padding: '24px'
+              fontSize: '40px',
+              marginBottom: '20px'
+            }}>👥</div>
+            <h3 style={{
+              color: 'white',
+              fontSize: '24px',
+              marginBottom: '10px'
+            }}>コミュニティ</h3>
+            <p style={{
+              color: 'rgba(255,255,255,0.8)',
+              fontSize: '14px'
             }}>
-              <div style={{
-                fontSize: '14px',
-                color: '#ff6b35',
-                marginBottom: '8px',
-                fontWeight: 600
-              }}>
-                12月22日（日）10:00
-              </div>
-              <h4 style={{
-                fontSize: '20px',
-                fontWeight: 700,
-                marginBottom: '12px'
-              }}>
-                窯元めぐりフィールドワーク
-              </h4>
-              <p style={{
-                fontSize: '14px',
-                color: '#b0b0b0',
-                lineHeight: 1.6
-              }}>
-                実際の窯元を訪問し、職人の技と想いに触れる特別な体験...
-              </p>
-            </div>
+              メンバー同士の交流と企画
+            </p>
           </div>
         </div>
-      </section>
-
-      {/* アクションボタンセクション */}
-      <section style={{
-        backgroundColor: '#1a1a1a',
-        padding: '60px 30px',
-        borderTop: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-          gap: '20px'
-        }}>
-          <button style={{
-            backgroundColor: 'transparent',
-            border: '2px solid #ff6b35',
-            color: '#ff6b35',
-            padding: '20px',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}>
-            📝 企画を提案する
-          </button>
-          <button style={{
-            backgroundColor: 'transparent',
-            border: '2px solid #a0522d',
-            color: '#a0522d',
-            padding: '20px',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}>
-            📚 アーカイブを見る
-          </button>
-          <button style={{
-            backgroundColor: 'transparent',
-            border: '2px solid #8b4513',
-            color: '#8b4513',
-            padding: '20px',
-            borderRadius: '8px',
-            fontSize: '16px',
-            fontWeight: 600,
-            cursor: 'pointer',
-            transition: 'all 0.3s ease'
-          }}>
-            👥 メンバー一覧
-          </button>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }
