@@ -22,6 +22,7 @@ export default function Home() {
   const [selectedYear, setSelectedYear] = useState('all');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [currentYear, setCurrentYear] = useState(1300);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,8 +48,34 @@ export default function Home() {
       return () => observer.disconnect();
     };
 
+    // カウントアップアニメーション
+    const countUpAnimation = () => {
+      const duration = 3000; // 3秒
+      const startTime = Date.now();
+      const startYear = 1300;
+      const endYear = 2024;
+      
+      const animate = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const year = Math.floor(startYear + (endYear - startYear) * easeOutQuart);
+        
+        setCurrentYear(year);
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+      
+      setTimeout(() => {
+        requestAnimationFrame(animate);
+      }, 1000); // 1秒後に開始
+    };
+
     window.addEventListener('scroll', handleScroll);
     const cleanup = observeElements();
+    countUpAnimation();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -350,68 +377,199 @@ export default function Home() {
       {/* Hero Section */}
       <section style={{
         minHeight: '100vh',
-        background: `linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.surfaceWarm} 100%)`,
+        position: 'relative',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         padding: '2rem',
-        position: 'relative'
+        overflow: 'hidden'
       }}>
+        {/* Background Layer */}
         <div style={{
-          maxWidth: '800px',
-          textAlign: 'center',
-          animation: visibleSections.has('hero') ? 'fadeInUp 1s ease' : 'none'
-        }} id="hero" data-animate>
-          <h1 style={{
-            fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-            fontWeight: 'bold',
-            marginBottom: '1.5rem',
-            color: colors.primaryDark,
-            lineHeight: '1.2'
-          }}>
-            瀬戸の土が、人をつなぐ
-          </h1>
-          
-          <p style={{
-            fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
-            color: colors.textSecondary,
-            marginBottom: '3rem',
-            maxWidth: '600px',
-            margin: '0 auto 3rem'
-          }}>
-            1300年の歴史を持つ瀬戸焼の街で、新しいコミュニティを育てています
-          </p>
+          position: 'absolute',
+          inset: 0,
+          background: `
+            radial-gradient(circle at 20% 80%, ${colors.surfaceWarm}40 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, ${colors.accentEarth}20 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, ${colors.accentGlaze}15 0%, transparent 50%),
+            linear-gradient(135deg, ${colors.primaryLight} 0%, ${colors.surfaceWarm} 100%)
+          `
+        }} />
 
-          <div style={{
-            background: 'white',
-            borderRadius: '20px',
-            padding: '2rem',
-            boxShadow: `0 10px 30px ${colors.shadowSoft}`,
-            maxWidth: '500px',
-            margin: '0 auto',
-            border: `2px solid ${colors.accentFlame}`
-          }}>
-            <div style={{
-              color: colors.accentFlame,
-              fontSize: '0.9rem',
-              fontWeight: 'bold',
-              marginBottom: '0.5rem'
+        {/* Floating Pottery Elements */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none'
+        }}>
+          {[
+            { emoji: '🏺', x: '10%', y: '20%', delay: '0s', duration: '20s' },
+            { emoji: '🍵', x: '85%', y: '15%', delay: '2s', duration: '25s' },
+            { emoji: '🌿', x: '15%', y: '70%', delay: '1s', duration: '18s' },
+            { emoji: '✨', x: '80%', y: '75%', delay: '3s', duration: '22s' },
+            { emoji: '🔥', x: '5%', y: '45%', delay: '1.5s', duration: '30s' },
+            { emoji: '🍃', x: '90%', y: '50%', delay: '2.5s', duration: '28s' }
+          ].map((item, index) => (
+            <div key={index} style={{
+              position: 'absolute',
+              left: item.x,
+              top: item.y,
+              fontSize: '2rem',
+              opacity: '0.3',
+              animation: `float ${item.duration} infinite linear`,
+              animationDelay: item.delay
             }}>
-              🔥 次回イベント
+              {item.emoji}
             </div>
-            <h3 style={{
-              fontSize: '1.3rem',
-              marginBottom: '0.5rem',
-              color: colors.primaryDark
+          ))}
+        </div>
+
+        {/* Particle Effect */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: `
+            radial-gradient(2px 2px at 20px 30px, ${colors.accentEarth}40, transparent),
+            radial-gradient(2px 2px at 40px 70px, ${colors.accentFlame}30, transparent),
+            radial-gradient(1px 1px at 90px 40px, ${colors.accentGlaze}40, transparent),
+            radial-gradient(1px 1px at 130px 80px, ${colors.textSecondary}30, transparent)
+          `,
+          backgroundSize: '150px 150px',
+          animation: 'particleMove 60s linear infinite'
+        }} />
+
+        <div style={{
+          maxWidth: '900px',
+          textAlign: 'center',
+          position: 'relative',
+          zIndex: 2
+        }} id="hero" data-animate>
+          <div style={{
+            animation: visibleSections.has('hero') ? 'fadeInUp 1s ease' : 'none'
+          }}>
+            <h1 style={{
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+              fontWeight: 'bold',
+              marginBottom: '1rem',
+              color: colors.primaryDark,
+              lineHeight: '1.2',
+              textShadow: `2px 2px 4px ${colors.shadowSoft}`
             }}>
-              土トーーク！vol.5
-            </h3>
+              瀬戸の土が、人をつなぐ
+            </h1>
+            
+            {/* Year Counter */}
+            <div style={{
+              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+              color: colors.accentFlame,
+              marginBottom: '2rem',
+              fontWeight: 'bold',
+              animation: 'pulse 2s infinite'
+            }}>
+              {currentYear}年の歴史を持つ瀬戸焼の街で
+            </div>
+            
             <p style={{
+              fontSize: 'clamp(1.1rem, 2vw, 1.3rem)',
               color: colors.textSecondary,
-              fontSize: '0.95rem'
+              marginBottom: '3rem',
+              maxWidth: '600px',
+              margin: '0 auto 3rem',
+              lineHeight: '1.6'
             }}>
-              12月15日(日) 14:00〜 | 瀬戸蔵
+              新しいコミュニティを育てています
             </p>
+
+            <div style={{
+              background: 'rgba(255, 255, 255, 0.95)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '25px',
+              padding: '2.5rem',
+              boxShadow: `0 15px 35px ${colors.shadowSoft}, 0 5px 15px rgba(255, 107, 53, 0.2)`,
+              maxWidth: '520px',
+              margin: '0 auto 3rem',
+              border: `2px solid ${colors.accentFlame}`,
+              position: 'relative',
+              animation: 'glow 3s ease-in-out infinite alternate'
+            }}>
+              {/* Corner decorations */}
+              <div style={{
+                position: 'absolute',
+                top: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '40px',
+                height: '4px',
+                background: colors.accentFlame,
+                borderRadius: '2px'
+              }} />
+              
+              <div style={{
+                color: colors.accentFlame,
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                marginBottom: '1rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem'
+              }}>
+                🔥 次回イベント
+              </div>
+              <h3 style={{
+                fontSize: '1.5rem',
+                marginBottom: '0.8rem',
+                color: colors.primaryDark,
+                fontWeight: 'bold'
+              }}>
+                土トーーク！vol.5
+              </h3>
+              <p style={{
+                color: colors.textSecondary,
+                fontSize: '1rem',
+                marginBottom: '1.5rem'
+              }}>
+                12月15日(日) 14:00〜 | 瀬戸蔵
+              </p>
+              <button style={{
+                background: `linear-gradient(135deg, ${colors.accentFlame}, ${colors.accentEarth})`,
+                color: 'white',
+                border: 'none',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: `0 4px 15px rgba(255, 107, 53, 0.3)`
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-3px)';
+                e.target.style.boxShadow = `0 8px 25px rgba(255, 107, 53, 0.4)`;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = `0 4px 15px rgba(255, 107, 53, 0.3)`;
+              }}>
+                詳細・参加申込
+              </button>
+            </div>
+
+            {/* Scroll Indicator */}
+            <div style={{
+              position: 'absolute',
+              bottom: '2rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              color: colors.textSecondary,
+              textAlign: 'center',
+              animation: 'bounce 2s infinite'
+            }}>
+              <div style={{ marginBottom: '0.5rem', fontSize: '0.9rem' }}>
+                スクロールして詳細を見る
+              </div>
+              <div style={{ fontSize: '1.5rem' }}>↓</div>
+            </div>
           </div>
         </div>
       </section>
@@ -1333,6 +1491,58 @@ export default function Home() {
           to {
             opacity: 1;
             transform: translateY(0);
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+            opacity: 0.2;
+          }
+          50% {
+            transform: translateY(-20px) rotate(180deg);
+            opacity: 0.4;
+          }
+        }
+        
+        @keyframes particleMove {
+          0% {
+            transform: translateX(0) translateY(0);
+          }
+          100% {
+            transform: translateX(-150px) translateY(-150px);
+          }
+        }
+        
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 0.8;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.05);
+          }
+        }
+        
+        @keyframes glow {
+          0% {
+            box-shadow: 0 15px 35px ${colors.shadowSoft}, 0 5px 15px rgba(255, 107, 53, 0.2);
+          }
+          100% {
+            box-shadow: 0 20px 40px ${colors.shadowSoft}, 0 8px 25px rgba(255, 107, 53, 0.4);
+          }
+        }
+        
+        @keyframes bounce {
+          0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0) translateX(-50%);
+          }
+          40% {
+            transform: translateY(-10px) translateX(-50%);
+          }
+          60% {
+            transform: translateY(-5px) translateX(-50%);
           }
         }
         
